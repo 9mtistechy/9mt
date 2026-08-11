@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9mt</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #000000;
+            color: #00ff66;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 998;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.8s ease;
+        }
+
+        .intro-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ff66;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+            padding: 0 20px;
+            animation: glitchAnim 0.3s infinite alternate;
+        }
+
+        @keyframes glitchAnim {
+            0% { opacity: 0.2; text-shadow: 2px 0 #ff0055, -2px 0 #00ffff; }
+            50% { opacity: 1; text-shadow: -3px -1px #ff0055, 3px 1px #00ffff; }
+            100% { opacity: 0.4; text-shadow: 2px 2px #ff0055, -2px -2px #00ffff; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1;
+        }
+
+        .view-counter {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #00cc52;
+            align-self: center;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .view-counter span {
+            color: #00ff66;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+        }
+
+        .name-title {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #00ff66;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(0, 255, 102, 0.6), 0 0 30px rgba(0, 255, 102, 0.2);
+        }
+
+        .years {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00cc52;
+            letter-spacing: 2px;
+            margin-top: -10px;
+        }
+
+        .section-header {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 5px;
+        }
+
+        .section-heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #00ff66;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
+        }
+
+        .squares-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .square-card {
+            background: rgba(0, 255, 102, 0.03);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            padding: 20px 12px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00ff66;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+        }
+
+        .square-card:active {
+            transform: scale(0.96);
+            background: rgba(0, 255, 102, 0.2);
+            border-color: rgba(0, 255, 102, 0.8);
+        }
+
+        .audio-container {
+            margin-top: 5px;
+            width: 100%;
+            background: rgba(0, 255, 102, 0.03);
+            padding: 10px 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        audio {
+            width: 100%;
+            height: 35px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen" onclick="startExperience()">
+        <div class="intro-text">9mt Off N2t</div>
+    </div>
+
+    <audio id="introAudio" src="https://www.myinstants.com/media/sounds/windows-xp-error.mp3" preload="auto"></audio>
+
+    <video id="bgVideo" autoplay muted loop playsinline class="bg-video">
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <div class="container">
+        <div class="view-counter">
+            Views: <span id="viewCount">10</span>
+        </div>
+
+        <div class="name-title">9mt</div>
+
+        <div class="years">2021-2026</div>
+
+        <div class="section-header">
+            <div class="section-heading">اخواني</div>
+        </div>
+
+        <div class="squares-grid">
+            <div class="square-card">3rbid</div>
+            <div class="square-card">Anta7ary</div>
+            <div class="square-card">Shadad</div>
+            <div class="square-card">Lk</div>
+            <div class="square-card">Al Adawei</div>
+            <div class="square-card">6rbh</div>
+            <div class="square-card">7mdan</div>
+        </div>
+
+        <div class="audio-container">
+            <audio id="mainAudio" controls loop>
+                <source src="song.mp3" type="audio/mp3">
+                متصفحك لا يدعم مشغل الصوت
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        let views = localStorage.getItem("page_views");
+        if (!views) {
+            views = 10;
+        } else {
+            views = parseInt(views) + 1;
+        }
+        localStorage.setItem("page_views", views);
+        document.getElementById("viewCount").innerText = views;
+
+        function startExperience() {
+            const introScreen = document.getElementById('intro-screen');
+            const introAudio = document.getElementById('introAudio');
+            const mainAudio = document.getElementById('mainAudio');
+
+            introScreen.style.opacity = '0';
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+            }, 800);
+
+            introAudio.play().then(() => {
+                introAudio.onended = () => {
+                    mainAudio.play();
+                };
+            }).catch(() => {
+                mainAudio.play();
+            });
+        }
+    </script>
+
+</body>
+</html>
